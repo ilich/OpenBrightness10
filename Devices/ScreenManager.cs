@@ -31,6 +31,8 @@ namespace OpenBrightness10.Devices
             }
         }
 
+        public int? Lux => null;
+
         public event EventHandler<int> BrightnessChanged;
 
         public void Start()

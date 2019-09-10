@@ -39,26 +39,22 @@ namespace OpenBrightness10.Controls
 
         private void OnLoad(object sender, EventArgs e)
         {
-            if (ScreenManager == null)
-            {
-                UpdateBrightness(null);
-            }
-            else
-            {
-                UpdateBrightness(ScreenManager.Brightness);
-            }
+            UpdateBrightness(ScreenManager?.Brightness);
+            UpdateLux(ScreenManager?.Lux);
         }
 
         private void UpdateBrightness(int? value)
         {
-            if (ScreenManager == null)
-            {
-                brightness.Text = "Invalid brightness";
-            }
-            else
-            {
-                brightness.Text = $"{value}%";
-            }
+            brightness.Text = value == null
+                ? "not available"
+                : $"{value}%";
+        }
+
+        private void UpdateLux(int? value)
+        {
+            lux.Text = value == null
+                ? "not available"
+                : value.ToString();
         }
     }
 }

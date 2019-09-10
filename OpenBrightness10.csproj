@@ -77,6 +77,7 @@
     <Compile Include="Devices\IBrightness.cs" />
     <Compile Include="Devices\IBrightnessChangeListener.cs" />
     <Compile Include="Devices\IComputerManager.cs" />
+    <Compile Include="Devices\ILightMeter.cs" />
     <Compile Include="Devices\IScreenManager.cs" />
     <Compile Include="Devices\ScreenManager.cs" />
     <Compile Include="Main.cs">
