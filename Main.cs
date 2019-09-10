@@ -1,4 +1,5 @@
 ﻿using OpenBrightness10.Devices;
+using System;
 using System.Windows.Forms;
 
 namespace OpenBrightness10
@@ -40,6 +41,27 @@ namespace OpenBrightness10
         private void OnLoad(object sender, System.EventArgs e)
         {
             screenManager.Start();
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+
+        private void OnNotifyIconDoubleClick(object sender, EventArgs e)
+        {
+            Show();
+        }
+
+        private void OnMenuOpenClick(object sender, EventArgs e)
+        {
+            Show();
+        }
+
+        private void OnMenuExitClick(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
