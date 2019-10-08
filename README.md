@@ -7,7 +7,9 @@ The app simplifies screen brightness control on Windows by utilizing light senso
 ## Supported light sensors
 
 ### Yocto-Light-V3
+
 **Product:** https://www.yoctopuce.com/EN/products/usb-environmental-sensors/yocto-light-v3
+
 **Documentation:** https://www.yoctopuce.com/projects/yoctolightV3/LIGHTMK3.usermanual-EN.pdf 
 
 ## Building the app
