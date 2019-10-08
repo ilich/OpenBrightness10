@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Open Brightness 10")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Missing screen brightness control for Windows")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Open Brightness 10")]
