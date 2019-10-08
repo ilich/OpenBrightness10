@@ -1,28 +1,45 @@
-﻿using OpenBrightness10.Controls;
-using OpenBrightness10.Devices;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using OpenBrightness10.Controls;
+using OpenBrightness10.Devices;
 
 namespace OpenBrightness10
 {
-    partial class Main : Form
+    internal partial class Main : Form
     {
+#pragma warning disable IDE0069 // Disposable fields should be disposed\
+        // the fields are disposed within OnClose method
         private readonly ScreenManager screenManager = new ScreenManager();
-
         private readonly YoctoLightV3Manager lightSensor = new YoctoLightV3Manager();
+#pragma warning restore IDE0069 // Disposable fields should be disposed
 
         public Main()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             // setting up brightness manager via WMI
-            SetScreenManager(screenManager, displayBrightness);
-            SetScreenManager(screenManager, setBrightness);
+            this.SetScreenManager(this.screenManager, this.displayBrightness);
+            this.SetScreenManager(this.screenManager, this.setBrightness);
 
             // setting up light sensor
-            SetLightMeter(lightSensor, displayBrightness);
-            SetLightMeter(lightSensor, sensorManager);
-            setBrightness.AddBrightnessChangeListener(lightSensor);
+            this.SetLightMeter(this.lightSensor, this.displayBrightness);
+            this.SetLightMeter(this.lightSensor, this.sensorManager);
+            this.setBrightness.AddBrightnessChangeListener(this.lightSensor);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            if (this.screenManager != null)
+            {
+                this.screenManager.Dispose();
+            }
+
+            if (this.lightSensor != null)
+            {
+                this.lightSensor.Dispose();
+            }
         }
 
         private void SetScreenManager(
@@ -60,24 +77,24 @@ namespace OpenBrightness10
 
         private void OnLoad(object sender, System.EventArgs e)
         {
-            screenManager.Start();
-            lightSensor.Enabled = true;
+            this.screenManager.Start();
+            this.lightSensor.Enabled = true;
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            Hide();
+            this.Hide();
         }
 
         private void OnNotifyIconDoubleClick(object sender, EventArgs e)
         {
-            Show();
+            this.Show();
         }
 
         private void OnMenuOpenClick(object sender, EventArgs e)
         {
-            Show();
+            this.Show();
         }
 
         private void OnMenuExitClick(object sender, EventArgs e)

@@ -1,16 +1,16 @@
-﻿using OpenBrightness10.Devices;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using OpenBrightness10.Devices;
 
 namespace OpenBrightness10.Controls
 {
-    partial class SetBrightness : BrightnessAwareUserControl
+    internal partial class SetBrightness : BrightnessAwareUserControl
     {
         private int initialBrightnessValue;
 
         public SetBrightness()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public override void AddBrightnessChangeListener(IBrightnessChangeListener listener)
@@ -20,7 +20,7 @@ namespace OpenBrightness10.Controls
                 return;
             }
 
-            listener.BrightnessChanged += OnBrightnessChanged;
+            listener.BrightnessChanged += this.OnBrightnessChanged;
             BrightnessChangeListeners.Add(listener);
         }
 
@@ -31,24 +31,24 @@ namespace OpenBrightness10.Controls
                 return;
             }
 
-            listener.BrightnessChanged -= OnBrightnessChanged;
+            listener.BrightnessChanged -= this.OnBrightnessChanged;
             BrightnessChangeListeners.Remove(listener);
         }
 
         private void OnBrightnessChanged(object sender, int current)
         {
-            if (brightness.Value == current)
+            if (this.brightness.Value == current)
             {
                 return;
             }
 
-            brightness.Value = current;
+            this.brightness.Value = current;
             
             // if brightness change has been required by light sensor, let's
             // change system's brightness
-            if (sender is ILightMeter && 
-                BrightnessProvider != null && 
-                brightness.Value != initialBrightnessValue)
+            if (sender is ILightMeter &&
+                this.BrightnessProvider != null &&
+                this.brightness.Value != this.initialBrightnessValue)
             {
                 BrightnessProvider.Brightness = current;
             }
@@ -56,20 +56,20 @@ namespace OpenBrightness10.Controls
 
         private void OnLoad(object sender, EventArgs e)
         {
-            brightness.Value = BrightnessProvider?.Brightness ?? 0;
+            this.brightness.Value = BrightnessProvider?.Brightness ?? 0;
         }
 
         private void OnBrightnessMouseUp(object sender, MouseEventArgs e)
         {
-            if (BrightnessProvider != null && brightness.Value != initialBrightnessValue)
+            if (this.BrightnessProvider != null && this.brightness.Value != this.initialBrightnessValue)
             {
-                BrightnessProvider.Brightness = brightness.Value;
+                BrightnessProvider.Brightness = this.brightness.Value;
             }
         }
 
         private void OnBrightnessMouseDown(object sender, MouseEventArgs e)
         {
-            initialBrightnessValue = brightness.Value;
+            this.initialBrightnessValue = this.brightness.Value;
         }
     }
 }

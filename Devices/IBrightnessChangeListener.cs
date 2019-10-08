@@ -2,12 +2,12 @@
 
 namespace OpenBrightness10.Devices
 {
-    interface IBrightnessChangeListener
+    internal interface IBrightnessChangeListener
     {
+        event EventHandler<int> BrightnessChanged;
+
         void Start();
 
         void Stop();
-
-        event EventHandler<int> BrightnessChanged;
     }
 }

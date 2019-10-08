@@ -3,7 +3,7 @@ using System.Management;
 
 namespace OpenBrightness10.Devices
 {
-    class ScreenManager 
+    internal class ScreenManager 
         : IBrightness,
         IBrightnessChangeListener,
         IDisposable
@@ -21,48 +21,67 @@ namespace OpenBrightness10.Devices
         {
             var eventQuery = new EventQuery(
                 @"SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA ""WmiMonitorBrightness""");
-            brightnessWatcher = new ManagementEventWatcher(scope, eventQuery);
-            brightnessWatcher.EventArrived += OnWmiMonitorBrightnessChanged;
+            this.brightnessWatcher = new ManagementEventWatcher(this.scope, eventQuery);
+            this.brightnessWatcher.EventArrived += this.OnWmiMonitorBrightnessChanged;
         }
+
+        public event EventHandler<int> BrightnessChanged;
 
         public int? Brightness
         {
-            get => GetBrightness();
+            get => this.GetBrightness();
             set
             {
-                SetBrightness(value ?? 100);
+                this.SetBrightness(value ?? 100);
             }
         }
 
         public int? Lux => null;
 
-        public event EventHandler<int> BrightnessChanged;
-
         public void Start()
         {
-            CheckState();
-            brightnessWatcher.Start();
+            this.CheckState();
+            this.brightnessWatcher.Start();
         }
 
         public void Stop()
         {
-            CheckState();
-            brightnessWatcher.Stop();
+            this.CheckState();
+            this.brightnessWatcher.Stop();
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.brightnessWatcher.Stop();
+                    this.brightnessWatcher.Dispose();
+                }
+
+                this.disposedValue = true;
+            }
         }
 
         private void OnWmiMonitorBrightnessChanged(object sender, EventArrivedEventArgs e)
         {
-            if (!disposedValue)
+            if (!this.disposedValue)
             {
-                BrightnessChanged?.Invoke(this, Brightness ?? 100);
+                this.BrightnessChanged?.Invoke(this, this.Brightness ?? 100);
             }
         }
 
         private int GetBrightness()
         {
-            CheckState();
+            this.CheckState();
 
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, brightnessQuery))
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(this.scope, this.brightnessQuery))
             {
                 using (ManagementObjectCollection objectCollection = searcher.Get())
                 {
@@ -77,7 +96,7 @@ namespace OpenBrightness10.Devices
 
         private void SetBrightness(int value)
         {
-            CheckState();
+            this.CheckState();
 
             if (value < 0)
             {
@@ -88,7 +107,7 @@ namespace OpenBrightness10.Devices
                 value = 100;
             }
 
-            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, brightnessQuery))
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(this.scope, this.brightnessQuery))
             {
                 using (ManagementObjectCollection objectCollection = searcher.Get())
                 {
@@ -98,44 +117,26 @@ namespace OpenBrightness10.Devices
 
                     // We need to create an instance to use the Set method
                     var instanceName = (string)brightnessClass["InstanceName"];
-                    var instance = new ManagementObject(
+                    using (var instance = new ManagementObject(
                         "root\\WMI",
                         $"WmiMonitorBrightnessMethods.InstanceName='{instanceName}'",
-                        null);
-
-                    var inParams = instance.GetMethodParameters("WmiSetBrightness");
-                    inParams["Brightness"] = value;
-                    inParams["Timeout"] = 0;
-                    instance.InvokeMethod("WmiSetBrightness", inParams, null);
+                        null))
+                    {
+                        var inParams = instance.GetMethodParameters("WmiSetBrightness");
+                        inParams["Brightness"] = value;
+                        inParams["Timeout"] = 0;
+                        instance.InvokeMethod("WmiSetBrightness", inParams, null);
+                    }
                 }
             }
         }
 
         private void CheckState()
         {
-            if (disposedValue)
+            if (this.disposedValue)
             {
                 throw new InvalidOperationException();
             }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    brightnessWatcher.Stop();
-                    brightnessWatcher.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
     }
 }

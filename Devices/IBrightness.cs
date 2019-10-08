@@ -1,6 +1,6 @@
 ﻿namespace OpenBrightness10.Devices
 {
-    interface IBrightness
+    internal interface IBrightness
     {
         int? Brightness { get; set; }
     }

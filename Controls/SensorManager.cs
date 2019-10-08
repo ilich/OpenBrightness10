@@ -3,46 +3,46 @@ using OpenBrightness10.Devices;
 
 namespace OpenBrightness10.Controls
 {
-    partial class SensorManager : BrightnessAwareUserControl
+    internal partial class SensorManager : BrightnessAwareUserControl
     {
         public SensorManager()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public override void SetLightMeter(ILightMeter lightMeter)
         {
-            if (LightMeter != null)
+            if (this.LightMeter != null)
             {
-                LightMeter.IsOnlineChanged -= OnSensorStatusChanged;
-                LightMeter.EnabledChanged -= OnSensorEnabledChanged;
+                LightMeter.IsOnlineChanged -= this.OnSensorStatusChanged;
+                LightMeter.EnabledChanged -= this.OnSensorEnabledChanged;
             }
 
             base.SetLightMeter(lightMeter);
-            LightMeter.IsOnlineChanged += OnSensorStatusChanged;
-            LightMeter.EnabledChanged += OnSensorEnabledChanged;
-            ShowSensorInfo();
+            LightMeter.IsOnlineChanged += this.OnSensorStatusChanged;
+            LightMeter.EnabledChanged += this.OnSensorEnabledChanged;
+            this.ShowSensorInfo();
         }
 
         private void OnSensorStatusChanged(object sender, bool isOnline)
         {
-            Invoke(new Action(() => ShowSensorInfo()));
+            this.Invoke(new Action(() => this.ShowSensorInfo()));
         }
 
         private void OnSensorEnabledChanged(object sender, bool isEnabled)
         {
-            Invoke(new Action(() => sensorEnabled.Checked = isEnabled));
+            this.Invoke(new Action(() => this.sensorEnabled.Checked = isEnabled));
         }
 
         private void OnSensorEnabledCheckedChanged(object sender, EventArgs e)
         {
-            LightMeter.Enabled = sensorEnabled.Checked;
+            LightMeter.Enabled = this.sensorEnabled.Checked;
         }
 
         private void ShowSensorInfo()
         {
-            sensorName.Text = LightMeter?.Name ?? SensorMessages.Offline;
-            sensorEnabled.Enabled = LightMeter?.IsOnline == true;
+            this.sensorName.Text = LightMeter?.Name ?? SensorMessages.Offline;
+            this.sensorEnabled.Enabled = LightMeter?.IsOnline == true;
         }
     }
 }

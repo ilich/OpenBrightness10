@@ -3,11 +3,11 @@ using OpenBrightness10.Devices;
 
 namespace OpenBrightness10.Controls
 {
-    partial class DisplayBrightness : BrightnessAwareUserControl
+    internal partial class DisplayBrightness : BrightnessAwareUserControl
     {
         public DisplayBrightness()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public override void AddBrightnessChangeListener(IBrightnessChangeListener listener)
@@ -17,7 +17,7 @@ namespace OpenBrightness10.Controls
                 return;
             }
 
-            listener.BrightnessChanged += OnBrightnessChanged;
+            listener.BrightnessChanged += this.OnBrightnessChanged;
             BrightnessChangeListeners.Add(listener);
         }
 
@@ -28,54 +28,54 @@ namespace OpenBrightness10.Controls
                 return;
             }
 
-            listener.BrightnessChanged -= OnBrightnessChanged;
+            listener.BrightnessChanged -= this.OnBrightnessChanged;
             BrightnessChangeListeners.Remove(listener);
         }
 
         public override void SetLightMeter(ILightMeter lightMeter)
         {
-            if (LightMeter != null)
+            if (this.LightMeter != null)
             {
-                LightMeter.LuxChanged -= OnLuxChanged;
-                LightMeter.IsOnlineChanged -= OnSensorStatusChanged;
-                LightMeter.EnabledChanged -= OnSensorEnabledChanged;
+                LightMeter.LuxChanged -= this.OnLuxChanged;
+                LightMeter.IsOnlineChanged -= this.OnSensorStatusChanged;
+                LightMeter.EnabledChanged -= this.OnSensorEnabledChanged;
             }
 
             base.SetLightMeter(lightMeter);
-            LightMeter.LuxChanged += OnLuxChanged;
-            LightMeter.IsOnlineChanged += OnSensorStatusChanged;
-            LightMeter.EnabledChanged += OnSensorEnabledChanged;
+            LightMeter.LuxChanged += this.OnLuxChanged;
+            LightMeter.IsOnlineChanged += this.OnSensorStatusChanged;
+            LightMeter.EnabledChanged += this.OnSensorEnabledChanged;
         }
 
         private void OnSensorEnabledChanged(object sender, bool e)
         {
-            Invoke(new Action(() => UpdateLux(null)));
+            this.Invoke(new Action(() => this.UpdateLux(null)));
         }
 
         private void OnSensorStatusChanged(object sender, bool isOnline)
         {
-            Invoke(new Action(() => UpdateLux(null)));
+            this.Invoke(new Action(() => this.UpdateLux(null)));
         }
 
         private void OnLuxChanged(object sender, int lux)
         {
-            Invoke(new Action(() => UpdateLux(lux)));
+            this.Invoke(new Action(() => this.UpdateLux(lux)));
         }
 
         private void OnBrightnessChanged(object sender, int current)
         {
-            Invoke(new Action(() => UpdateBrightness(current)));
+            this.Invoke(new Action(() => this.UpdateBrightness(current)));
         }
 
         private void OnLoad(object sender, EventArgs e)
         {
-            UpdateBrightness(BrightnessProvider?.Brightness);
-            UpdateLux(LightMeter?.Lux);
+            this.UpdateBrightness(BrightnessProvider?.Brightness);
+            this.UpdateLux(LightMeter?.Lux);
         }
 
         private void UpdateBrightness(int? value)
         {
-            brightness.Text = value == null
+            this.brightness.Text = value == null
                 ? "not available"
                 : $"{value}%";
         }
@@ -84,17 +84,17 @@ namespace OpenBrightness10.Controls
         {
             if (LightMeter?.IsOnline == true && LightMeter?.Enabled == true)
             {
-                lux.Text = value == null
+                this.lux.Text = value == null
                    ? SensorMessages.Offline
                    : $"{value} lux";
             }
             else if (LightMeter?.IsOnline == true && LightMeter?.Enabled == false)
             {
-                lux.Text = SensorMessages.Disabled;
+                this.lux.Text = SensorMessages.Disabled;
             }
             else
             {
-                lux.Text = SensorMessages.Offline;
+                this.lux.Text = SensorMessages.Offline;
             }
         }
     }

@@ -6,7 +6,7 @@ using OpenBrightness10.Devices;
 namespace OpenBrightness10.Controls
 {
     // the class cannot be abstract because it will break UI Designer.
-    class BrightnessAwareUserControl : UserControl
+    internal class BrightnessAwareUserControl : UserControl
     {
         protected List<IBrightnessChangeListener> BrightnessChangeListeners { get; } =
             new List<IBrightnessChangeListener>();
@@ -27,12 +27,12 @@ namespace OpenBrightness10.Controls
 
         public virtual void SetBightnessProvider(IBrightness brightnessProvider)
         {
-            BrightnessProvider = brightnessProvider;
+            this.BrightnessProvider = brightnessProvider;
         }
 
         public virtual void SetLightMeter(ILightMeter lightMeter)
         {
-            LightMeter = lightMeter;
+            this.LightMeter = lightMeter;
         }
     }
 }
