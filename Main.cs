@@ -1,4 +1,5 @@
-﻿using OpenBrightness10.Devices;
+﻿using OpenBrightness10.Controls;
+using OpenBrightness10.Devices;
 using System;
 using System.Windows.Forms;
 
@@ -6,36 +7,26 @@ namespace OpenBrightness10
 {
     partial class Main : Form
     {
-        private readonly IScreenManager screenManager = new ScreenManager();
-
-        private readonly IComputerManager computerManager = new ComputerManager();
+        private readonly ScreenManager screenManager = new ScreenManager();
 
         public Main()
         {
             InitializeComponent();
-            SetScreenManager(screenManager);
-            SetCompyterManager(computerManager);
+            SetScreenManager(screenManager, displayBrightness);
+            SetScreenManager(screenManager, setBrightness);
         }
 
-        private void SetCompyterManager(IComputerManager computerManager)
-        {
-            if (computerManager == null)
-            {
-                return;
-            }
-
-            lockPC.ComputerManager = computerManager;
-        }
-
-        private void SetScreenManager(IScreenManager screenManager)
+        private void SetScreenManager(
+            ScreenManager screenManager, 
+            BrightnessAwareUserControl control)
         {
             if (screenManager == null)
             {
                 return;
             }
 
-            displayBrightness.ScreenManager = screenManager;
-            setBrightness.ScreenManager = screenManager;
+            control.AddBrightnessChangeListener(screenManager);
+            control.SetBightnessProvider(screenManager);
         }
 
         private void OnLoad(object sender, System.EventArgs e)

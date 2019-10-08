@@ -33,7 +33,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.displayBrightness = new OpenBrightness10.Controls.DisplayBrightness();
             this.setBrightness = new OpenBrightness10.Controls.SetBrightness();
-            this.lockPC = new OpenBrightness10.Controls.LockPC();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,44 +47,35 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.displayBrightness, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.setBrightness, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lockPC, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(651, 204);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(542, 170);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // displayBrightness
             // 
             this.displayBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.displayBrightness.Location = new System.Drawing.Point(13, 13);
+            this.displayBrightness.Location = new System.Drawing.Point(10, 10);
+            this.displayBrightness.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.displayBrightness.Name = "displayBrightness";
-            this.displayBrightness.ScreenManager = null;
-            this.displayBrightness.Size = new System.Drawing.Size(625, 55);
+            this.displayBrightness.Size = new System.Drawing.Size(522, 47);
             this.displayBrightness.TabIndex = 0;
             // 
             // setBrightness
             // 
             this.setBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.setBrightness.Location = new System.Drawing.Point(13, 74);
+            this.setBrightness.Location = new System.Drawing.Point(10, 61);
+            this.setBrightness.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.setBrightness.Name = "setBrightness";
-            this.setBrightness.ScreenManager = null;
-            this.setBrightness.Size = new System.Drawing.Size(625, 55);
+            this.setBrightness.Size = new System.Drawing.Size(522, 47);
             this.setBrightness.TabIndex = 1;
-            // 
-            // lockPC
-            // 
-            this.lockPC.ComputerManager = null;
-            this.lockPC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lockPC.Location = new System.Drawing.Point(13, 135);
-            this.lockPC.Name = "lockPC";
-            this.lockPC.Size = new System.Drawing.Size(625, 56);
-            this.lockPC.TabIndex = 2;
             // 
             // notifyIcon
             // 
@@ -101,30 +91,31 @@
             this.menuOpen,
             this.menuExit});
             this.notifyIconMenu.Name = "notifyIconMenu";
-            this.notifyIconMenu.Size = new System.Drawing.Size(131, 68);
+            this.notifyIconMenu.Size = new System.Drawing.Size(116, 52);
             // 
             // menuOpen
             // 
             this.menuOpen.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuOpen.Name = "menuOpen";
-            this.menuOpen.Size = new System.Drawing.Size(130, 32);
+            this.menuOpen.Size = new System.Drawing.Size(115, 24);
             this.menuOpen.Text = "Open";
             this.menuOpen.Click += new System.EventHandler(this.OnMenuOpenClick);
             // 
             // menuExit
             // 
             this.menuExit.Name = "menuExit";
-            this.menuExit.Size = new System.Drawing.Size(130, 32);
+            this.menuExit.Size = new System.Drawing.Size(115, 24);
             this.menuExit.Text = "Exit";
             this.menuExit.Click += new System.EventHandler(this.OnMenuExitClick);
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(651, 204);
+            this.ClientSize = new System.Drawing.Size(542, 170);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Main";
@@ -141,7 +132,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private Controls.DisplayBrightness displayBrightness;
         private Controls.SetBrightness setBrightness;
-        private Controls.LockPC lockPC;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip notifyIconMenu;
         private System.Windows.Forms.ToolStripMenuItem menuOpen;

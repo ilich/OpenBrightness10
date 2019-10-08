@@ -4,10 +4,8 @@ using System.Windows.Forms;
 
 namespace OpenBrightness10.Controls
 {
-    partial class SetBrightness : UserControl, IScreenManagerAware
+    partial class SetBrightness : BrightnessAwareUserControl
     {
-        private IScreenManager screenManager;
-
         private int initialBrightnessValue;
 
         public SetBrightness()
@@ -15,22 +13,26 @@ namespace OpenBrightness10.Controls
             InitializeComponent();
         }
 
-        public IScreenManager ScreenManager
+        public override void AddBrightnessChangeListener(IBrightnessChangeListener listener)
         {
-            get => screenManager;
-            set
+            if (BrightnessChangeListeners.Contains(listener))
             {
-                if (screenManager != null)
-                {
-                    screenManager.BrightnessChanged -= OnBrightnessChanged;
-                }
-
-                screenManager = value;
-                if (screenManager != null)
-                {
-                    screenManager.BrightnessChanged += OnBrightnessChanged;
-                }
+                return;
             }
+
+            listener.BrightnessChanged += OnBrightnessChanged;
+            BrightnessChangeListeners.Add(listener);
+        }
+
+        public override void RemoveBrightnessChangeListener(IBrightnessChangeListener listener)
+        {
+            if (!BrightnessChangeListeners.Contains(listener))
+            {
+                return;
+            }
+
+            listener.BrightnessChanged -= OnBrightnessChanged;
+            BrightnessChangeListeners.Remove(listener);
         }
 
         private void OnBrightnessChanged(object sender, int current)
@@ -45,17 +47,14 @@ namespace OpenBrightness10.Controls
 
         private void OnLoad(object sender, EventArgs e)
         {
-            if (ScreenManager != null)
-            {
-                brightness.Value = ScreenManager.Brightness;
-            }
+            brightness.Value = BrightnessProvider?.Brightness ?? 0;
         }
 
         private void OnBrightnessMouseUp(object sender, MouseEventArgs e)
         {
-            if (brightness.Value != initialBrightnessValue)
+            if (BrightnessProvider != null && brightness.Value != initialBrightnessValue)
             {
-                ScreenManager.Brightness = brightness.Value;
+                BrightnessProvider.Brightness = brightness.Value;
             }
         }
 

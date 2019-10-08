@@ -1,35 +1,35 @@
-﻿using OpenBrightness10.Devices;
-using System;
-using System.Windows.Forms;
+﻿using System;
+using OpenBrightness10.Devices;
 
 namespace OpenBrightness10.Controls
 {
-    partial class DisplayBrightness : UserControl, IScreenManagerAware
+    partial class DisplayBrightness : BrightnessAwareUserControl
     {
-        private IScreenManager screenManager;
-
         public DisplayBrightness()
         {
             InitializeComponent();
         }
 
-        public IScreenManager ScreenManager
+        public override void AddBrightnessChangeListener(IBrightnessChangeListener listener)
         {
-            get => screenManager;
-            set
+            if (BrightnessChangeListeners.Contains(listener))
             {
-                if (screenManager != null)
-                {
-                    screenManager.BrightnessChanged -= OnBrightnessChanged;
-                }
-
-                screenManager = value;
-                if (screenManager != null)
-                {
-                    screenManager.BrightnessChanged += OnBrightnessChanged;
-                }
-                
+                return;
             }
+
+            listener.BrightnessChanged += OnBrightnessChanged;
+            BrightnessChangeListeners.Add(listener);
+        }
+
+        public override void RemoveBrightnessChangeListener(IBrightnessChangeListener listener)
+        {
+            if (!BrightnessChangeListeners.Contains(listener))
+            {
+                return;
+            }
+
+            listener.BrightnessChanged -= OnBrightnessChanged;
+            BrightnessChangeListeners.Remove(listener);
         }
 
         private void OnBrightnessChanged(object sender, int current)
@@ -39,8 +39,8 @@ namespace OpenBrightness10.Controls
 
         private void OnLoad(object sender, EventArgs e)
         {
-            UpdateBrightness(ScreenManager?.Brightness);
-            UpdateLux(ScreenManager?.Lux);
+            UpdateBrightness(BrightnessProvider?.Brightness);
+            UpdateLux(LightMeter?.Lux);
         }
 
         private void UpdateBrightness(int? value)

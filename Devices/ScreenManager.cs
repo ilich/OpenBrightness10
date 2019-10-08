@@ -3,7 +3,10 @@ using System.Management;
 
 namespace OpenBrightness10.Devices
 {
-    class ScreenManager : IScreenManager, IDisposable
+    class ScreenManager 
+        : IBrightness,
+        IBrightnessChangeListener,
+        IDisposable
     {
         private readonly ManagementScope scope = new ManagementScope("root\\WMI");
 
