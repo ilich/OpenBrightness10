@@ -43,6 +43,15 @@ namespace OpenBrightness10.Controls
             }
 
             brightness.Value = current;
+            
+            // if brightness change has been required by light sensor, let's
+            // change system's brightness
+            if (sender is ILightMeter && 
+                BrightnessProvider != null && 
+                brightness.Value != initialBrightnessValue)
+            {
+                BrightnessProvider.Brightness = current;
+            }
         }
 
         private void OnLoad(object sender, EventArgs e)

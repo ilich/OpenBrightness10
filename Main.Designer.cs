@@ -49,32 +49,32 @@
             this.tableLayoutPanel1.Controls.Add(this.setBrightness, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(8);
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(542, 170);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(542, 196);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // displayBrightness
             // 
             this.displayBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayBrightness.Location = new System.Drawing.Point(10, 10);
-            this.displayBrightness.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.displayBrightness.Margin = new System.Windows.Forms.Padding(2);
             this.displayBrightness.Name = "displayBrightness";
-            this.displayBrightness.Size = new System.Drawing.Size(522, 47);
+            this.displayBrightness.Size = new System.Drawing.Size(522, 55);
             this.displayBrightness.TabIndex = 0;
             // 
             // setBrightness
             // 
             this.setBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.setBrightness.Location = new System.Drawing.Point(10, 61);
-            this.setBrightness.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.setBrightness.Location = new System.Drawing.Point(10, 69);
+            this.setBrightness.Margin = new System.Windows.Forms.Padding(2);
             this.setBrightness.Name = "setBrightness";
-            this.setBrightness.Size = new System.Drawing.Size(522, 47);
+            this.setBrightness.Size = new System.Drawing.Size(522, 56);
             this.setBrightness.TabIndex = 1;
             // 
             // notifyIcon
@@ -112,10 +112,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(542, 170);
+            this.ClientSize = new System.Drawing.Size(542, 196);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Main";

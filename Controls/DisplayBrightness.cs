@@ -5,6 +5,10 @@ namespace OpenBrightness10.Controls
 {
     partial class DisplayBrightness : BrightnessAwareUserControl
     {
+        private const string SensorNotAvailable = "sensor is not available";
+
+        private const string SensorDisabled = "sensor has been disabled";
+
         public DisplayBrightness()
         {
             InitializeComponent();
@@ -32,6 +36,28 @@ namespace OpenBrightness10.Controls
             BrightnessChangeListeners.Remove(listener);
         }
 
+        public override void SetLightMeter(ILightMeter lightMeter)
+        {
+            if (LightMeter != null)
+            {
+                LightMeter.LuxChanged -= OnLuxChanged;
+            }
+
+            base.SetLightMeter(lightMeter);
+            LightMeter.LuxChanged += OnLuxChanged;
+            LightMeter.IsOnlineChanged += OnSensorStatusChanged;
+        }
+
+        private void OnSensorStatusChanged(object sender, bool isOnline)
+        {
+            Invoke(new Action(() => UpdateLux(null)));
+        }
+
+        private void OnLuxChanged(object sender, int lux)
+        {
+            Invoke(new Action(() => UpdateLux(lux)));
+        }
+
         private void OnBrightnessChanged(object sender, int current)
         {
             Invoke(new Action(() => UpdateBrightness(current)));
@@ -52,9 +78,24 @@ namespace OpenBrightness10.Controls
 
         private void UpdateLux(int? value)
         {
-            lux.Text = value == null
-                ? "not available"
-                : value.ToString();
+            if (LightMeter?.IsOnline == true && LightMeter?.Enabled == true)
+            {
+                lux.Text = value == null
+                   ? SensorNotAvailable
+                   : $"{value} lux";
+
+                sensorName.Text = LightMeter.Name;
+            }
+            else if (LightMeter?.IsOnline == true && LightMeter?.Enabled == false)
+            {
+                lux.Text = SensorDisabled;
+                sensorName.Text = SensorDisabled;
+            }
+            else
+            {
+                lux.Text = SensorNotAvailable;
+                sensorName.Text = SensorNotAvailable;
+            }
         }
     }
 }

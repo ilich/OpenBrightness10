@@ -25,12 +25,12 @@ namespace OpenBrightness10.Devices
             brightnessWatcher.EventArrived += OnWmiMonitorBrightnessChanged;
         }
 
-        public int Brightness
+        public int? Brightness
         {
             get => GetBrightness();
             set
             {
-                SetBrightness(value);
+                SetBrightness(value ?? 100);
             }
         }
 
@@ -54,7 +54,7 @@ namespace OpenBrightness10.Devices
         {
             if (!disposedValue)
             {
-                BrightnessChanged?.Invoke(this, Brightness);
+                BrightnessChanged?.Invoke(this, Brightness ?? 100);
             }
         }
 

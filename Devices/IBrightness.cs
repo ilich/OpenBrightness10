@@ -2,6 +2,6 @@
 {
     interface IBrightness
     {
-        int Brightness { get; set; }
+        int? Brightness { get; set; }
     }
 }

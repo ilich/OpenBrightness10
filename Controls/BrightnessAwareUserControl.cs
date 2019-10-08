@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using OpenBrightness10.Devices;
 
 namespace OpenBrightness10.Controls
 {
-    abstract class BrightnessAwareUserControl : UserControl
+    // the class cannot be abstract because it will break UI Designer.
+    class BrightnessAwareUserControl : UserControl
     {
         protected List<IBrightnessChangeListener> BrightnessChangeListeners { get; } =
             new List<IBrightnessChangeListener>();
@@ -13,9 +15,15 @@ namespace OpenBrightness10.Controls
 
         protected ILightMeter LightMeter { get; set; }
 
-        public abstract void AddBrightnessChangeListener(IBrightnessChangeListener listener);
+        public virtual void AddBrightnessChangeListener(IBrightnessChangeListener listener)
+        {
+            throw new NotImplementedException();
+        }
 
-        public abstract void RemoveBrightnessChangeListener(IBrightnessChangeListener listener);
+        public virtual void RemoveBrightnessChangeListener(IBrightnessChangeListener listener)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual void SetBightnessProvider(IBrightness brightnessProvider)
         {

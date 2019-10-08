@@ -9,11 +9,16 @@ namespace OpenBrightness10
     {
         private readonly ScreenManager screenManager = new ScreenManager();
 
+        private readonly YoctoLightV3Manager lightSensor = new YoctoLightV3Manager();
+
         public Main()
         {
             InitializeComponent();
             SetScreenManager(screenManager, displayBrightness);
             SetScreenManager(screenManager, setBrightness);
+            SetLightMeter(lightSensor, displayBrightness);
+            setBrightness.AddBrightnessChangeListener(lightSensor);
+            lightSensor.Enabled = true;
         }
 
         private void SetScreenManager(
@@ -22,11 +27,31 @@ namespace OpenBrightness10
         {
             if (screenManager == null)
             {
-                return;
+                throw new ArgumentNullException(nameof(screenManager));
+            }
+
+            if (control == null)
+            {
+                throw new ArgumentNullException(nameof(control));
             }
 
             control.AddBrightnessChangeListener(screenManager);
             control.SetBightnessProvider(screenManager);
+        }
+
+        private void SetLightMeter(ILightMeter sensor, BrightnessAwareUserControl control)
+        {
+            if (sensor == null)
+            {
+                throw new ArgumentNullException(nameof(sensor));
+            }
+
+            if (control == null)
+            {
+                throw new ArgumentNullException(nameof(control));
+            }
+
+            control.SetLightMeter(sensor);
         }
 
         private void OnLoad(object sender, System.EventArgs e)
