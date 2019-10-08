@@ -14,11 +14,15 @@ namespace OpenBrightness10
         public Main()
         {
             InitializeComponent();
+
+            // setting up brightness manager via WMI
             SetScreenManager(screenManager, displayBrightness);
             SetScreenManager(screenManager, setBrightness);
+
+            // setting up light sensor
             SetLightMeter(lightSensor, displayBrightness);
+            SetLightMeter(lightSensor, sensorManager);
             setBrightness.AddBrightnessChangeListener(lightSensor);
-            lightSensor.Enabled = true;
         }
 
         private void SetScreenManager(
@@ -57,6 +61,7 @@ namespace OpenBrightness10
         private void OnLoad(object sender, System.EventArgs e)
         {
             screenManager.Start();
+            lightSensor.Enabled = true;
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)

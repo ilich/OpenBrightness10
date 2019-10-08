@@ -59,6 +59,7 @@ namespace OpenBrightness10.Devices
                 }
 
                 enabled = value;
+                EnabledChanged?.Invoke(this, enabled);
             }
         }
 
@@ -67,6 +68,8 @@ namespace OpenBrightness10.Devices
         public event EventHandler<int> LuxChanged;
 
         public event EventHandler<bool> IsOnlineChanged;
+
+        public event EventHandler<bool> EnabledChanged;
 
         public YoctoLightV3Manager()
         {
@@ -104,6 +107,8 @@ namespace OpenBrightness10.Devices
             }
 
             resetEvent.Reset();
+            Interlocked.Exchange(ref lastLux, 0);
+            Interlocked.Exchange(ref lastBrightness, 0);
         }
 
         public void RunSensorLoop()
@@ -142,12 +147,15 @@ namespace OpenBrightness10.Devices
             if (IsOnline)
             {
                 IsOnlineChanged?.Invoke(this, true);
+                EnabledChanged?.Invoke(this, Enabled);
             }
         }
 
         private void OnDeviceDisconnected(YModule module)
         {
             Interlocked.Exchange(ref sensor, null);
+            Interlocked.Exchange(ref lastLux, 0);
+            Interlocked.Exchange(ref lastBrightness, 0);
             IsOnlineChanged?.Invoke(this, false);
         }
 

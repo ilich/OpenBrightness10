@@ -33,8 +33,6 @@
             this.brightness = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lux = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.sensorName = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,8 +42,6 @@
             this.flowLayoutPanel1.Controls.Add(this.brightness);
             this.flowLayoutPanel1.Controls.Add(this.label2);
             this.flowLayoutPanel1.Controls.Add(this.lux);
-            this.flowLayoutPanel1.Controls.Add(this.label3);
-            this.flowLayoutPanel1.Controls.Add(this.sensorName);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -91,24 +87,6 @@
             this.lux.TabIndex = 3;
             this.lux.Text = "0";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 17);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Sensor:";
-            // 
-            // sensorName
-            // 
-            this.sensorName.AutoSize = true;
-            this.flowLayoutPanel1.SetFlowBreak(this.sensorName, true);
-            this.sensorName.Location = new System.Drawing.Point(66, 34);
-            this.sensorName.Name = "sensorName";
-            this.sensorName.Size = new System.Drawing.Size(0, 17);
-            this.sensorName.TabIndex = 5;
-            // 
             // DisplayBrightness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -131,7 +109,5 @@
         private System.Windows.Forms.Label brightness;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lux;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label sensorName;
     }
 }

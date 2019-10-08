@@ -10,10 +10,12 @@ namespace OpenBrightness10.Devices
 
         bool IsOnline { get; }
 
-        bool Enabled { get; }
+        bool Enabled { get; set; }
 
         event EventHandler<int> LuxChanged;
 
         event EventHandler<bool> IsOnlineChanged;
+
+        event EventHandler<bool> EnabledChanged;
     }
 }

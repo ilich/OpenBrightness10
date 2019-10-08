@@ -5,10 +5,6 @@ namespace OpenBrightness10.Controls
 {
     partial class DisplayBrightness : BrightnessAwareUserControl
     {
-        private const string SensorNotAvailable = "sensor is not available";
-
-        private const string SensorDisabled = "sensor has been disabled";
-
         public DisplayBrightness()
         {
             InitializeComponent();
@@ -41,11 +37,19 @@ namespace OpenBrightness10.Controls
             if (LightMeter != null)
             {
                 LightMeter.LuxChanged -= OnLuxChanged;
+                LightMeter.IsOnlineChanged -= OnSensorStatusChanged;
+                LightMeter.EnabledChanged -= OnSensorEnabledChanged;
             }
 
             base.SetLightMeter(lightMeter);
             LightMeter.LuxChanged += OnLuxChanged;
             LightMeter.IsOnlineChanged += OnSensorStatusChanged;
+            LightMeter.EnabledChanged += OnSensorEnabledChanged;
+        }
+
+        private void OnSensorEnabledChanged(object sender, bool e)
+        {
+            Invoke(new Action(() => UpdateLux(null)));
         }
 
         private void OnSensorStatusChanged(object sender, bool isOnline)
@@ -81,20 +85,16 @@ namespace OpenBrightness10.Controls
             if (LightMeter?.IsOnline == true && LightMeter?.Enabled == true)
             {
                 lux.Text = value == null
-                   ? SensorNotAvailable
+                   ? SensorMessages.Offline
                    : $"{value} lux";
-
-                sensorName.Text = LightMeter.Name;
             }
             else if (LightMeter?.IsOnline == true && LightMeter?.Enabled == false)
             {
-                lux.Text = SensorDisabled;
-                sensorName.Text = SensorDisabled;
+                lux.Text = SensorMessages.Disabled;
             }
             else
             {
-                lux.Text = SensorNotAvailable;
-                sensorName.Text = SensorNotAvailable;
+                lux.Text = SensorMessages.Offline;
             }
         }
     }

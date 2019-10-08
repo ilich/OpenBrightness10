@@ -38,9 +38,12 @@
     <ApplicationIcon>icons8-illumination-brightness-48.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +53,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="Yoctopuce.YoctoLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Yoctopuce.YoctoLib.1.10.37304\lib\net45\Yoctopuce.YoctoLib.dll</HintPath>
     </Reference>
@@ -64,6 +68,13 @@
     <Compile Include="Controls\DisplayBrightness.Designer.cs">
       <DependentUpon>DisplayBrightness.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SensorManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SensorManager.Designer.cs">
+      <DependentUpon>SensorManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SensorMessages.cs" />
     <Compile Include="Controls\SetBrightness.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -85,6 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\DisplayBrightness.resx">
       <DependentUpon>DisplayBrightness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SensorManager.resx">
+      <DependentUpon>SensorManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SetBrightness.resx">
       <DependentUpon>SetBrightness.cs</DependentUpon>
